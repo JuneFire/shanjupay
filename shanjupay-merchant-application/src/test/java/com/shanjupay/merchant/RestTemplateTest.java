@@ -61,4 +61,12 @@ public class RestTemplateTest {
         String key = (String) result.get("key");
         System.out.println(key);
     }
+
+    @Test
+    public void getLastIndexOf(){
+        String str= "0126456";
+        System.out.println(str.lastIndexOf('6'));
+
+    }
+
 }
