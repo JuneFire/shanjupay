@@ -6,15 +6,18 @@ import com.shanjupay.common.util.PhoneUtil;
 import com.shanjupay.merchant.api.MerchantService;
 import com.shanjupay.merchant.api.dto.MerchantDTO;
 import com.shanjupay.merchant.convert.MerchantRegisterConvert;
+import com.shanjupay.merchant.service.FileService;
 import com.shanjupay.merchant.service.SmsService;
 import com.shanjupay.merchant.vo.MerchantRegisterVO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @author Administrator
@@ -30,6 +33,9 @@ public class MerchantController {
 
     @Autowired  //注入本地的bean
     SmsService smsService;
+
+    @Autowired
+    FileService fileService;
 
     @ApiOperation(value="根据id查询商户信息")
     @GetMapping("/merchants/{id}")
@@ -80,9 +86,30 @@ public class MerchantController {
         return merchantRegisterVO;
     }
 
+
+    //上传证件照
+    @ApiOperation("上传证件照")
+    @PostMapping("/upload")
+    public String upload(@ApiParam(value = "证件照",required = true) @RequestParam(value = "file") MultipartFile multipartFile) throws IOException {
+
+        //调用fileService上传文件
+        //生成的文件名称fileName，要保证它的唯一
+        //文件原始名称
+        String originalFilename = multipartFile.getOriginalFilename();
+        //扩展名
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+        //文件名称
+        String fileName = UUID.randomUUID()+suffix;
+        //byte[] bytes,String fileName
+        return fileService.upload(multipartFile.getBytes(),fileName);
+    }
+
+
+
     @ApiOperation("测试")
     @GetMapping(path = "/hello")
     public String hello(){
+        System.out.println(">>>>>>");
         return "hello";
     }
 

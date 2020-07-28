@@ -12,4 +12,38 @@ public class Test {
         System.out.println(a == b);
     }
 
+    public static int testTryCatch(){
+        try {
+            int  i =  1 / 0;
+            System.out.println(1111);
+            return 1;
+        } catch (Exception e){
+            System.out.println(2111);
+            return  2;
+        }
+        finally {
+            System.out.println(311);
+            return 3;
+        }
+    }
+
+    public static int f(int value) {
+        try {
+            return value * value;
+        } finally {
+//            if (value == 2) {
+//                return 0;
+//            }
+            value = value + 1;
+        }
+    }
+
+    @org.junit.Test
+    public void testTry(){
+        int i = testTryCatch();
+        System.out.println("return: " + i);
+        System.out.println(f(2));
+    }
+
+
 }
