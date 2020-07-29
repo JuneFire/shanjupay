@@ -33,7 +33,7 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Override
     @Transactional
-    public MerchantDTO createMerchant(MerchantDTO merchantDTO)  throws RuntimeException{
+    public MerchantDTO createMerchant(MerchantDTO merchantDTO)  throws BusinessException{
 
         if(merchantDTO == null){
             throw new BusinessException(CommonErrorCode.E_100108);
@@ -65,6 +65,35 @@ public class MerchantServiceImpl implements MerchantService {
 //        MerchantDTO merchantDTONew = MerchantConvert.INSTANCE.entity2dto(entity);
 //        return merchantDTONew;
         return MerchantConvert.INSTANCE.entity2dto(merchant);
+    }
+
+    /**
+     * 资质申请接口
+     *
+     * @param merchantId  商户id
+     * @param merchantDTO 资质申请的信息
+     * @throws BusinessException
+     */
+    @Override
+    @Transactional
+    public void applyMerchant(Long merchantId, MerchantDTO merchantDTO) throws BusinessException {
+        if(merchantId == null || merchantDTO == null){
+            throw new BusinessException(CommonErrorCode.E_300009);
+        }
+        //校验merchantId合法性，查询商户表，如果查询不到记录，认为非法
+        Merchant merchant = merchantMapper.selectById(merchantId);
+        if(merchant == null){
+            throw new BusinessException(CommonErrorCode.E_200002);
+        }
+        //将dto转成entity
+        Merchant entity = MerchantConvert.INSTANCE.dto2entity(merchantDTO);
+        //将必要的参数设置到entity
+        entity.setId(merchant.getId());
+        entity.setMobile(merchant.getMobile());//因为资质申请的时候手机号不让改，还使用数据库中原来的手机号
+        entity.setAuditStatus("1");//审核状态1-已申请待审核
+        entity.setTenantId(merchant.getTenantId());
+        //调用mapper更新商户表
+        merchantMapper.updateById(entity);
     }
 
 }

@@ -5,9 +5,12 @@ import com.shanjupay.common.domain.CommonErrorCode;
 import com.shanjupay.common.util.PhoneUtil;
 import com.shanjupay.merchant.api.MerchantService;
 import com.shanjupay.merchant.api.dto.MerchantDTO;
+import com.shanjupay.merchant.common.util.SecurityUtil;
+import com.shanjupay.merchant.convert.MerchantDetailConvert;
 import com.shanjupay.merchant.convert.MerchantRegisterConvert;
 import com.shanjupay.merchant.service.FileService;
 import com.shanjupay.merchant.service.SmsService;
+import com.shanjupay.merchant.vo.MerchantDetailVO;
 import com.shanjupay.merchant.vo.MerchantRegisterVO;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -105,6 +108,20 @@ public class MerchantController {
     }
 
 
+    @ApiOperation("资质申请")
+    @PostMapping("/my/merchants/save")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "merchantInfo", value = "商户认证资料", required = true, dataType = "MerchantDetailVO", paramType = "body")
+    })
+    public void saveMerchant(@RequestBody MerchantDetailVO merchantInfo){
+        //解析token，取出当前登录商户的id
+         Long merchantId = SecurityUtil.getMerchantId();
+         System.out.println(merchantId);
+
+        //Long merchantId,MerchantDTO merchantDTO
+        MerchantDTO merchantDTO = MerchantDetailConvert.INSTANCE.vo2dto(merchantInfo);
+        merchantService.applyMerchant(merchantId,merchantDTO);
+    }
 
     @ApiOperation("测试")
     @GetMapping(path = "/hello")
