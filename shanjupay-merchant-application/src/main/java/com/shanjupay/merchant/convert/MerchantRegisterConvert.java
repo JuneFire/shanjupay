@@ -23,7 +23,7 @@ public interface MerchantRegisterConvert {
         // 将dto 转 vo
         MerchantDTO merchantDTO = new MerchantDTO();
         merchantDTO.setMobile("18679427254");
-        merchantDTO.setPassword("123456");
+//        merchantDTO.setPassword("123456");
 
         MerchantRegisterVO merchantRegisterVO = MerchantRegisterConvert.INSTANCE.dto2vo(merchantDTO);
         System.out.println(merchantRegisterVO);

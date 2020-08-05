@@ -1,5 +1,7 @@
 package com.shanjupay.merchant;
 
+import java.util.Arrays;
+
 public class Test {
 
     @org.junit.Test
@@ -45,5 +47,13 @@ public class Test {
         System.out.println(f(2));
     }
 
+    final int a = 3;
+    @org.junit.Test
+    public void testFinal(){
+        final  int b = 4;
+        final int[] arr = {1,2,3,5};
+        arr[3] = 50;
+        System.out.println(Arrays.toString(arr));
+    }
 
 }

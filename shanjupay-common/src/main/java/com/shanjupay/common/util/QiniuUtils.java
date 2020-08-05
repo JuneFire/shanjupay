@@ -37,7 +37,7 @@ public class QiniuUtils {
     public static void  upload2qiniu(String accessKey,String secretKey,String bucket, byte[] bytes,String fileName) throws RuntimeException{
 
         //构造一个带指定 Region 对象的配置类，指定存储区域，和存储空间选择的区域一致
-        Configuration cfg = new Configuration(Region.huadong());
+        Configuration cfg = new Configuration(Region.huanan());
         //...其他参数参考类注释
         UploadManager uploadManager = new UploadManager(cfg);
 
@@ -76,19 +76,19 @@ public class QiniuUtils {
     //测试文件上传
     private static void testUpload(){
         //构造一个带指定 Region 对象的配置类，指定存储区域，和存储空间选择的区域一致
-        Configuration cfg = new Configuration(Region.huadong());
+        Configuration cfg = new Configuration(Region.huanan());
 //...其他参数参考类注释
         UploadManager uploadManager = new UploadManager(cfg);
 //...生成上传凭证，然后准备上传
-        String accessKey = "jxLykr4_TQBv76hyzfCDDga_WUZxHYqbiQgAky4V";
-        String secretKey = "f23G2UIK6G9NFfGXwWOJMqHDZxkLnLM7OhOeuebe";
-        String bucket = "shanjupay-c1";
+        String accessKey = "vG3krn6ZU9j_KCJEsOW-76A3RxEbgCkN6tkTDOf_";
+        String secretKey = "p04hR8a1151UXAb0K3GpYznPxAGuSj_9LbegmJuS";
+        String bucket = "shanjupay-m1";
 //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = UUID.randomUUID().toString()+".png";
         FileInputStream fileInputStream = null;
         try {
 
-            String filePath = "D:\\workplace\\shanjuzhifu\\test.jpg";
+            String filePath = "F:\\develop\\shanjupay\\1.png";
             fileInputStream = new FileInputStream(new File(filePath));
             //得到本地文件的字节数组
             byte[] bytes = IOUtils.toByteArray(fileInputStream);
@@ -121,12 +121,12 @@ public class QiniuUtils {
     }
 
     private static void getdownloadurl() throws UnsupportedEncodingException {
-        String fileName = "3bdb704d-2e91-4435-a59e-d724cbb1e400.png";
-        String domainOfBucket = "http://qe4ohkz5x.bkt.clouddn.com";
+        String fileName = "283d041b-2a49-4a04-8409-516043804870.png";
+        String domainOfBucket = "http://q2cdf3ibb.bkt.clouddn.com";
         String encodedFileName = URLEncoder.encode(fileName, "utf-8").replace("+", "%20");
         String publicUrl = String.format("%s/%s", domainOfBucket, encodedFileName);
-        String accessKey = "jxLykr4_TQBv76hyzfCDDga_WUZxHYqbiQgAky4V";
-        String secretKey = "f23G2UIK6G9NFfGXwWOJMqHDZxkLnLM7OhOeuebe";
+        String accessKey = "vG3krn6ZU9j_KCJEsOW-76A3RxEbgCkN6tkTDOf_";
+        String secretKey = "p04hR8a1151UXAb0K3GpYznPxAGuSj_9LbegmJuS";
         Auth auth = Auth.create(accessKey, secretKey);
         long expireInSeconds = 3600;//1小时，可以自定义链接过期时间
         String finalUrl = auth.privateDownloadUrl(publicUrl, expireInSeconds);
@@ -135,8 +135,6 @@ public class QiniuUtils {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
         //上传测试
-//        QiniuUtils.testUpload();
         QiniuUtils.getdownloadurl();
-//        System.out.println("hello");
     }
 }

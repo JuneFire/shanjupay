@@ -62,7 +62,7 @@ public enum CommonErrorCode implements ErrorCode {
 	E_300007(300007,"原始支付渠道为空"),
 	E_300008(300008,"已存在相同的支付参数，不可重复配置"),
 	E_300009(300009,"传入对象为空或者缺少必要的参数"),
-
+	E_300010(300010,"应用没有绑定服务类型，不允许配置参数"),
 
 	E_300110(300110,"交易单号不能为空"),
 
@@ -73,12 +73,12 @@ public enum CommonErrorCode implements ErrorCode {
 	////////////////////////////////////运营服务异常编码500//////////////////
 
 	////////////////////////////////////特殊异常编码/////////////////////////////////////
-	E_999991(999991,"调用微服务-授权服务 被熔断"),
-	E_999992(999992,"调用微服务-用户服务 被熔断"),
-	E_999993(999993,"调用微服务-资源服务 被熔断"),
-	E_999994(999994,"调用微服务-同步服务 被熔断"),
+    E_999991(999991,"调用微服务-授权服务 被熔断"),
+    E_999992(999992,"调用微服务-用户服务 被熔断"),
+    E_999993(999993,"调用微服务-资源服务 被熔断"),
+    E_999994(999994,"调用微服务-同步服务 被熔断"),
 
-	E_999910(999910,"调用微服务-没有传tenantId租户Id"),
+    E_999910(999910,"调用微服务-没有传tenantId租户Id"),
 	E_999911(999911,"调用微服务-没有json-token令牌"),
 	E_999912(999912,"调用微服务-json-token令牌解析有误"),
 	E_999913(999913,"调用微服务-json-token令牌有误-没有当前租户信息"),
@@ -110,11 +110,11 @@ public enum CommonErrorCode implements ErrorCode {
 
 
 	public static CommonErrorCode setErrorCode(int code) {
-		for (CommonErrorCode errorCode : CommonErrorCode.values()) {
-			if (errorCode.getCode()==code) {
-				return errorCode;
-			}
-		}
-		return null;
+       for (CommonErrorCode errorCode : CommonErrorCode.values()) {
+           if (errorCode.getCode()==code) {
+               return errorCode;
+           }
+       }
+	       return null;
 	}
 }
