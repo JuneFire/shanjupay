@@ -67,4 +67,8 @@ public interface PayChannelService {
      * @return
      */
     PayChannelParamDTO queryParamByAppPlatformAndPayChannel(String appId,String platformChannel,String payChannel);
+
+    public String printHello();
+
+
 }

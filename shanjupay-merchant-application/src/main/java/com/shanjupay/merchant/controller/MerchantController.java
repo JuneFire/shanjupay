@@ -76,7 +76,7 @@ public class MerchantController {
         }
 
         //校验验证码
-        smsService.checkVerifiyCode(merchantRegisterVO.getVerifiykey(),merchantRegisterVO.getVerifiyCode());
+  //      smsService.checkVerifiyCode(merchantRegisterVO.getVerifiykey(),merchantRegisterVO.getVerifiyCode());
         //调用dubbo服务接口
 //        MerchantDTO merchantDTO = new MerchantDTO();
         //向dto写入商户注册的信息
@@ -126,8 +126,8 @@ public class MerchantController {
     @ApiOperation("测试")
     @GetMapping(path = "/hello")
     public String hello(){
-        System.out.println(">>>>>>");
-        return "hello";
+
+        return merchantService.callTest();
     }
 
     @ApiOperation("测试")

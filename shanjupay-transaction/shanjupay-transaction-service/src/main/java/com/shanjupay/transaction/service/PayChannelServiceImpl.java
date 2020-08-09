@@ -69,8 +69,7 @@ public class PayChannelServiceImpl implements PayChannelService {
     public void bindPlatformChannelForApp(String appId, String platformChannelCodes) throws BusinessException {
 
         //根据应用id和服务类型code查询 ，如果已经绑定则不再插入，否则插入记录
-        AppPlatformChannel appPlatformChannel = appPlatformChannelMapper
-                .selectOne(new LambdaQueryWrapper<AppPlatformChannel>().eq(AppPlatformChannel::getAppId, appId)
+        AppPlatformChannel appPlatformChannel = appPlatformChannelMapper.selectOne(new LambdaQueryWrapper<AppPlatformChannel>().eq(AppPlatformChannel::getAppId, appId)
                 .eq(AppPlatformChannel::getPlatformChannel, platformChannelCodes));
         if(appPlatformChannel == null){
             //向app_platform_channel插入
@@ -245,6 +244,11 @@ public class PayChannelServiceImpl implements PayChannelService {
             return appPlatformChannel.getId();//应用与服务类型的绑定id
         }
         return null;
+    }
+
+    @Override
+    public String printHello() {
+        return "Hello douubo！！！";
     }
 
 }
